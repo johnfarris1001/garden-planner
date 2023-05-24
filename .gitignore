@@ -11,6 +11,9 @@
 # production
 /build
 
+# create-react-app readme
+README-react.md
+
 # misc
 .DS_Store
 .env.local
