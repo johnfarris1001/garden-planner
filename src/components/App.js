@@ -9,11 +9,19 @@ import Plants from "./Plants";
 
 function App() {
     const [gardeners, setGardeners] = useState([]);
+    const [gardens, setGardens] = useState([]);
+    const [plants, setPlants] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:9292/gardeners")
             .then((r) => r.json())
             .then((data) => setGardeners(data));
+        fetch("http://localhost:9292/gardens")
+            .then((r) => r.json())
+            .then((data) => setGardens(data));
+        fetch("http://localhost:9292/plants")
+            .then((r) => r.json())
+            .then((data) => setPlants(data));
     }, []);
     return (
         <div className="App">
@@ -25,10 +33,10 @@ function App() {
                     <Gardeners gardeners={gardeners} />
                 </Route>
                 <Route path="/gardens">
-                    <Gardens />
+                    <Gardens gardens={gardens} />
                 </Route>
                 <Route path="/plants">
-                    <Plants />
+                    <Plants plants={plants} />
                 </Route>
             </Switch>
         </div>
