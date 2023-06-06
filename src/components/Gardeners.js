@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Card, Button, Form } from "semantic-ui-react";
 
 function Gardeners({ gardeners, addGardener }) {
     const [showForm, setShowForm] = useState(false);
     const [newName, setNewName] = useState("");
+
+    const history = useHistory();
 
     function handleClick() {
         setShowForm(!showForm);
@@ -38,7 +41,10 @@ function Gardeners({ gardeners, addGardener }) {
 
     const gardenersToDisplay = gardeners.map((gardener) => {
         return (
-            <Card key={gardener.id}>
+            <Card
+                onClick={() => history.push(`/gardeners/${gardener.id}`)}
+                key={gardener.id}
+            >
                 <Card.Content header={gardener.name} />
                 <Card.Content extra>
                     {gardener.gardens
