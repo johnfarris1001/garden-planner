@@ -13,14 +13,16 @@ function App() {
     const [gardens, setGardens] = useState([]);
     const [plants, setPlants] = useState([]);
 
+    const server = "http://localhost:9292";
+
     useEffect(() => {
-        fetch("http://localhost:9292/gardeners")
+        fetch(`${server}/gardeners`)
             .then((r) => r.json())
             .then((data) => setGardeners(data));
-        fetch("http://localhost:9292/gardens")
+        fetch(`${server}/gardens`)
             .then((r) => r.json())
             .then((data) => setGardens(data));
-        fetch("http://localhost:9292/plants")
+        fetch(`${server}/plants`)
             .then((r) => r.json())
             .then((data) => setPlants(data));
     }, []);
@@ -48,7 +50,7 @@ function App() {
                     <Plants plants={plants} />
                 </Route>
                 <Route path="/gardeners/:gardenerId">
-                    <Gardener gardeners={gardeners} />
+                    <Gardener server={server} />
                 </Route>
             </Switch>
         </div>
