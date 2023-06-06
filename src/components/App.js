@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import "../App.css";
 import NavBar from "./NavBar";
 import Gardeners from "./Gardeners";
+import Gardener from "./Gardener";
 import Gardens from "./Gardens";
 import Plants from "./Plants";
 
@@ -34,7 +35,7 @@ function App() {
             <br />
             Garden Planner
             <Switch>
-                <Route path="/gardeners">
+                <Route exact path="/gardeners">
                     <Gardeners
                         gardeners={gardeners}
                         addGardener={handleAddGardener}
@@ -45,6 +46,9 @@ function App() {
                 </Route>
                 <Route path="/plants">
                     <Plants plants={plants} />
+                </Route>
+                <Route path="/gardeners/:gardenerId">
+                    <Gardener gardeners={gardeners} />
                 </Route>
             </Switch>
         </div>
