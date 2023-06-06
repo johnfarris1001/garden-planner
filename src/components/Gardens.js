@@ -10,9 +10,7 @@ function Gardens({ gardens }) {
         return (
             <Card key={garden.id}>
                 <Card.Content header={"Name: " + garden.name} />
-                <Card.Content meta>
-                    Gardener: {garden.gardener.name}
-                </Card.Content>
+                <Card.Content meta={"Gardener: " + garden.gardener.name} />
                 <Card.Content extra>
                     Location: {capitalize(garden.indoor_outdoor)}
                     <br />

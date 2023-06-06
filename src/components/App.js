@@ -23,6 +23,11 @@ function App() {
             .then((r) => r.json())
             .then((data) => setPlants(data));
     }, []);
+
+    function handleAddGardener(gardener) {
+        setGardeners([...gardeners, gardener]);
+    }
+
     return (
         <div className="App">
             <NavBar />
@@ -30,7 +35,10 @@ function App() {
             Garden Planner
             <Switch>
                 <Route path="/gardeners">
-                    <Gardeners gardeners={gardeners} />
+                    <Gardeners
+                        gardeners={gardeners}
+                        addGardener={handleAddGardener}
+                    />
                 </Route>
                 <Route path="/gardens">
                     <Gardens gardens={gardens} />

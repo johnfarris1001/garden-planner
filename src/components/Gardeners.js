@@ -1,23 +1,80 @@
 import React, { useState } from "react";
-import { Card, Icon } from "semantic-ui-react";
+import { Card, Button, Form } from "semantic-ui-react";
 
-function Gardeners({ gardeners }) {
-    const [formData, setFormData] = useState(null);
+function Gardeners({ gardeners, addGardener }) {
+    const [showForm, setShowForm] = useState(false);
+    const [newName, setNewName] = useState("");
+
+    function handleClick() {
+        setShowForm(!showForm);
+    }
+
+    const display = showForm
+        ? { width: "50%", margin: "auto", padding: "10px", border: "solid" }
+        : { display: "none" };
+    const buttonText = showForm ? "Hide Form" : "Add New Gardener";
+
+    function handleChange(e) {
+        setNewName(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!newName) return;
+        fetch("http://localhost:9292/gardeners", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: newName,
+            }),
+        })
+            .then((r) => r.json())
+            .then((data) => addGardener(data));
+
+        setNewName("");
+    }
 
     const gardenersToDisplay = gardeners.map((gardener) => {
         return (
             <Card key={gardener.id}>
                 <Card.Content header={gardener.name} />
                 <Card.Content extra>
-                    <Icon name="lemon" />
-                    {gardener.gardens.length}{" "}
-                    {gardener.gardens.length == 1 ? "Garden" : "Gardens"}
+                    {gardener.gardens
+                        ? `🌱 ${gardener.gardens.length} ${
+                              gardener.gardens.length == 1
+                                  ? "Garden"
+                                  : "Gardens"
+                          }`
+                        : "New Gardener"}
                 </Card.Content>
             </Card>
         );
     });
 
-    return <Card.Group centered>{gardenersToDisplay}</Card.Group>;
+    return (
+        <div>
+            <div>
+                <Button style={{ margin: "10px" }} onClick={handleClick}>
+                    {buttonText}
+                </Button>
+                <Form style={display} onSubmit={handleSubmit}>
+                    <Form.Group widths="equal">
+                        <Form.Input
+                            fluid
+                            placeholder="Name"
+                            value={newName}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                    <Form.Button>Submit</Form.Button>
+                </Form>
+            </div>
+            <br />
+            <Card.Group centered>{gardenersToDisplay}</Card.Group>
+        </div>
+    );
 }
 
 export default Gardeners;
