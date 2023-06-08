@@ -6,7 +6,7 @@ function Plants({ plants }) {
         return (
             <Card key={plant.id}>
                 <Card.Content header={plant.name} />
-                <Card.Content meta>Variety: {plant.variety}</Card.Content>
+                <Card.Content meta={"Variety: " + plant.variety} />
             </Card>
         );
     });

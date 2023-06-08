@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 import Gardeners from "./Gardeners";
 import Gardener from "./Gardener";
 import Gardens from "./Gardens";
+import Garden from "./Garden";
 import Plants from "./Plants";
 
 function App() {
@@ -31,6 +32,20 @@ function App() {
         setGardeners([...gardeners, gardener]);
     }
 
+    function handleDeleteGardener(gardener) {
+        const newGardeners = gardeners.filter((item) => {
+            return gardener.id != item.id;
+        });
+        setGardeners(newGardeners);
+    }
+
+    function handleEditGardener(gardener) {
+        const newGardeners = gardeners.filter((item) => {
+            return gardener.id != item.id;
+        });
+        setGardeners([...newGardeners, gardener]);
+    }
+
     return (
         <div className="App">
             <NavBar />
@@ -41,16 +56,24 @@ function App() {
                     <Gardeners
                         gardeners={gardeners}
                         addGardener={handleAddGardener}
+                        server={server}
                     />
                 </Route>
-                <Route path="/gardens">
+                <Route exact path="/gardens">
                     <Gardens gardens={gardens} />
+                </Route>
+                <Route path="/gardens/gardenId">
+                    <Garden />
                 </Route>
                 <Route path="/plants">
                     <Plants plants={plants} />
                 </Route>
                 <Route path="/gardeners/:gardenerId">
-                    <Gardener server={server} />
+                    <Gardener
+                        server={server}
+                        deleteGardener={handleDeleteGardener}
+                        editGardener={handleEditGardener}
+                    />
                 </Route>
             </Switch>
         </div>

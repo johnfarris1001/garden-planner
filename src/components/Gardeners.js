@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Card, Button, Form } from "semantic-ui-react";
 
-function Gardeners({ gardeners, addGardener }) {
+function Gardeners({ gardeners, addGardener, server }) {
     const [showForm, setShowForm] = useState(false);
     const [newName, setNewName] = useState("");
 
@@ -24,7 +24,7 @@ function Gardeners({ gardeners, addGardener }) {
     function handleSubmit(e) {
         e.preventDefault();
         if (!newName) return;
-        fetch("http://localhost:9292/gardeners", {
+        fetch(`${server}/gardeners`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

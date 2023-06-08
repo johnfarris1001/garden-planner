@@ -1,15 +1,21 @@
 import React from "react";
-import { Card, Icon } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Card } from "semantic-ui-react";
 
 function Gardens({ gardens }) {
     function capitalize(s) {
         return s && s[0].toUpperCase() + s.slice(1);
     }
 
+    const history = useHistory();
+
     const gardensToDisplay = gardens.map((garden) => {
         return (
-            <Card key={garden.id}>
-                <Card.Content header={"Name: " + garden.name} />
+            <Card
+                onClick={() => history.push(`/gardens/${garden.id}`)}
+                key={garden.id}
+            >
+                <Card.Header>{garden.name}</Card.Header>
                 <Card.Content meta={"Gardener: " + garden.gardener.name} />
                 <Card.Content extra>
                     Location: {capitalize(garden.indoor_outdoor)}
@@ -18,11 +24,16 @@ function Gardens({ gardens }) {
                     <br />
                     Rain: {capitalize(garden.rain)}
                 </Card.Content>
+                <Card.Content description={"Plants: " + garden.plants.length} />
             </Card>
         );
     });
 
-    return <Card.Group centered>{gardensToDisplay}</Card.Group>;
+    return (
+        <Card.Group style={{ padding: "20px" }} centered>
+            {gardens.length != 0 ? gardensToDisplay : "No Gardens Yet"}
+        </Card.Group>
+    );
 }
 
 export default Gardens;
