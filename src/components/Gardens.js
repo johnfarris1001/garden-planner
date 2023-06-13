@@ -16,7 +16,13 @@ function Gardens({ gardens }) {
                 key={garden.id}
             >
                 <Card.Header>{garden.name}</Card.Header>
-                <Card.Content meta={"Gardener: " + garden.gardener.name} />
+                <Card.Content
+                    meta={
+                        garden.gardener
+                            ? "Gardener: " + garden.gardener.name
+                            : "Gardener Deleted!"
+                    }
+                />
                 <Card.Content extra>
                     Location: {capitalize(garden.indoor_outdoor)}
                     <br />

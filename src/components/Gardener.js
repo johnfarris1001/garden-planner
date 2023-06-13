@@ -4,7 +4,7 @@ import { Card, Button, Form } from "semantic-ui-react";
 
 import Gardens from "./Gardens";
 
-function Gardener({ server, deleteGardener, editGardener }) {
+function Gardener({ server, deleteGardener, editGardener, addGarden }) {
     const params = useParams();
     const history = useHistory();
 
@@ -13,6 +13,22 @@ function Gardener({ server, deleteGardener, editGardener }) {
     const [showEditForm, setShowEditForm] = useState(false);
     const [showNewForm, setShowNewForm] = useState(false);
     const [newName, setNewName] = useState("");
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [newGardenFormData, setNewGardenFormData] = useState({
+        gardenerId: gardener.id,
+        name: "",
+        location: "",
+        sunlight: "",
+        rain: "",
+    });
+
+    const blankFormData = {
+        gardenerId: gardener.id,
+        name: "",
+        location: "",
+        sunlight: "",
+        rain: "",
+    };
 
     useEffect(() => {
         fetch(`${server}/gardeners/${params.gardenerId}`)
@@ -24,6 +40,10 @@ function Gardener({ server, deleteGardener, editGardener }) {
     }, []);
 
     function handleDelete() {
+        if (!confirmDelete) {
+            setConfirmDelete(true);
+            return;
+        }
         fetch(`${server}/gardeners/${params.gardenerId}`, {
             method: "DELETE",
         })
@@ -55,7 +75,29 @@ function Gardener({ server, deleteGardener, editGardener }) {
             });
     }
 
-    const formDisplay = showEditForm
+    function handleNewGarden(e) {
+        e.preventDefault();
+        //if (!newName) return;
+        fetch(`${server}/gardens`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                newGardenFormData,
+            }),
+        })
+            .then((r) => r.json())
+            .then((data) => addGarden(data));
+
+        setNewGardenFormData(blankFormData);
+    }
+
+    const editFormDisplay = showEditForm
+        ? { padding: "10px", width: "30%", margin: "auto" }
+        : { display: "none" };
+
+    const newFormDisplay = showNewForm
         ? { padding: "10px", width: "30%", margin: "auto" }
         : { display: "none" };
 
@@ -65,8 +107,10 @@ function Gardener({ server, deleteGardener, editGardener }) {
             <Button onClick={() => setShowEditForm(!showEditForm)}>
                 {showEditForm ? "Cancel Edit" : "Edit Gardener Name"}
             </Button>
-            <Button onClick={handleDelete}>Delete Gardener</Button>
-            <Form style={formDisplay} onSubmit={handleEdit}>
+            <Button onClick={handleDelete}>
+                {confirmDelete ? "Are You Sure?" : "Delete Gardener"}
+            </Button>
+            <Form style={editFormDisplay} onSubmit={handleEdit}>
                 <Form.Field>
                     <label>Name: </label>
                     <input
@@ -83,6 +127,57 @@ function Gardener({ server, deleteGardener, editGardener }) {
             <Button onClick={() => setShowNewForm(!showNewForm)}>
                 {showNewForm ? "Cancel New Garden" : "Start New Garden"}
             </Button>
+            <Form style={newFormDisplay} onSubmit={handleNewGarden}>
+                <Form.Field>
+                    <input
+                        placeholder="Name"
+                        value={newGardenFormData.name}
+                        onChange={(e) =>
+                            setNewGardenFormData({
+                                ...newGardenFormData,
+                                name: e.target.value,
+                            })
+                        }
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <input
+                        placeholder="Location"
+                        value={newGardenFormData.location}
+                        onChange={(e) =>
+                            setNewGardenFormData({
+                                ...newGardenFormData,
+                                location: e.target.value,
+                            })
+                        }
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <input
+                        placeholder="Sunlight "
+                        value={newGardenFormData.sunlight}
+                        onChange={(e) =>
+                            setNewGardenFormData({
+                                ...newGardenFormData,
+                                sunlight: e.target.value,
+                            })
+                        }
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <input
+                        placeholder="Rain "
+                        value={newGardenFormData.rain}
+                        onChange={(e) =>
+                            setNewGardenFormData({
+                                ...newGardenFormData,
+                                rain: e.target.value,
+                            })
+                        }
+                    />
+                </Form.Field>
+                <Button>Submit</Button>
+            </Form>
         </div>
     );
 }
