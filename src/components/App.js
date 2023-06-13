@@ -62,8 +62,8 @@ function App() {
                 <Route exact path="/gardens">
                     <Gardens gardens={gardens} />
                 </Route>
-                <Route path="/gardens/gardenId">
-                    <Garden />
+                <Route path="/gardens/:gardenId">
+                    <Garden server={server} />
                 </Route>
                 <Route path="/plants">
                     <Plants plants={plants} />
