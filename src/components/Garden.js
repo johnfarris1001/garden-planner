@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Table, Button } from "semantic-ui-react";
+import { Table, List, Button } from "semantic-ui-react";
+
+import Plant from "./Plant";
 
 function capitalize(s) {
     return s && s[0].toUpperCase() + s.slice(1);
-}
-
-function convertDate(date) {
-    return `${date.slice(5, 7)}/${date.slice(8, 10)}/${date.slice(0, 4)}`;
 }
 
 function Garden({ server }) {
@@ -31,27 +29,23 @@ function Garden({ server }) {
     }, []);
 
     const plants = garden.plants.map((plant) => {
-        return (
-            <Table.Row key={plant.id}>
-                <Table.Cell>{plant.name}</Table.Cell>
-                <Table.Cell>{capitalize(plant.variety)}</Table.Cell>
-                <Table.Cell>{convertDate(plant.created_at)}</Table.Cell>
-                <Table.Cell>
-                    <Button>Update Plant</Button>
-                    <Button>Delete Plant</Button>
-                </Table.Cell>
-            </Table.Row>
-        );
+        return <Plant plant={plant} />;
     });
 
     return (
         <div>
             <h2>{garden.name}</h2>
-            <p>{"Gardener: " + garden.gardener.name}</p>
-            <p>{"Location: " + capitalize(garden.indoor_outdoor) + "s"}</p>
-            <p>{"Sunlight: " + capitalize(garden.sunlight)}</p>
-            <p>{"Rain: " + capitalize(garden.rain)}</p>
-            <Table celled structured>
+            <List>
+                <List.Item>{"Gardener: " + garden.gardener.name}</List.Item>
+                <List.Item>
+                    {"Location: " + capitalize(garden.indoor_outdoor) + "s"}
+                </List.Item>
+                <List.Item>
+                    {"Sunlight: " + capitalize(garden.sunlight)}
+                </List.Item>
+                <List.Item>{"Rain: " + capitalize(garden.rain)}</List.Item>
+            </List>
+            <Table celled structured style={{ width: "80%", margin: "auto" }}>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
@@ -62,6 +56,11 @@ function Garden({ server }) {
                 </Table.Header>
                 <Table.Body>{plants}</Table.Body>
             </Table>
+            <div style={{ padding: "20px" }}>
+                <Button>Add New Plant!</Button>
+                <Button>Update Garden Details</Button>
+                <Button>Delete Garden</Button>
+            </div>
         </div>
     );
 }
