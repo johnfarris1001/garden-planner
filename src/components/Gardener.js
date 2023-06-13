@@ -78,19 +78,23 @@ function Gardener({ server, deleteGardener, editGardener, addGarden }) {
     function handleNewGarden(e) {
         e.preventDefault();
         //if (!newName) return;
+        newGardenFormData.gardenerId = gardener.id;
         fetch(`${server}/gardens`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                newGardenFormData,
-            }),
+            body: JSON.stringify(newGardenFormData),
         })
             .then((r) => r.json())
             .then((data) => addGarden(data));
 
         setNewGardenFormData(blankFormData);
+        setShowNewForm(false);
+    }
+
+    function addGarden(garden) {
+        setGardens([...gardens, garden]);
     }
 
     const editFormDisplay = showEditForm

@@ -30,7 +30,13 @@ function Gardens({ gardens }) {
                     <br />
                     Rain: {capitalize(garden.rain)}
                 </Card.Content>
-                <Card.Content description={"Plants: " + garden.plants.length} />
+                <Card.Content
+                    description={
+                        garden.plants
+                            ? "Plants: " + garden.plants.length
+                            : "No Plants Yet"
+                    }
+                />
             </Card>
         );
     });

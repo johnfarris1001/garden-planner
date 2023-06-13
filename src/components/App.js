@@ -46,8 +46,6 @@ function App() {
         setGardeners([...newGardeners, gardener]);
     }
 
-    function handleAddGarden(garden) {}
-
     return (
         <div className="App">
             <NavBar />
@@ -75,7 +73,6 @@ function App() {
                         server={server}
                         deleteGardener={handleDeleteGardener}
                         editGardener={handleEditGardener}
-                        addGarden={handleAddGarden}
                     />
                 </Route>
             </Switch>

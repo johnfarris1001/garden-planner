@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 
-function Garden({ garden, gardener }) {
+function Garden() {
     return <Table celled></Table>;
 }
 
