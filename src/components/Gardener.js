@@ -10,7 +10,8 @@ function Gardener({ server, deleteGardener, editGardener }) {
 
     const [gardener, setGardener] = useState({});
     const [gardens, setGardens] = useState([]);
-    const [showForm, setShowForm] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [showNewForm, setShowNewForm] = useState(false);
     const [newName, setNewName] = useState("");
 
     useEffect(() => {
@@ -33,14 +34,6 @@ function Gardener({ server, deleteGardener, editGardener }) {
             });
     }
 
-    function handleDisplayForm() {
-        setShowForm(!showForm);
-    }
-
-    function handleChange(e) {
-        setNewName(e.target.value);
-    }
-
     function handleEdit(e) {
         e.preventDefault();
         if (!newName) return;
@@ -57,36 +50,39 @@ function Gardener({ server, deleteGardener, editGardener }) {
             .then((data) => {
                 setGardener(data);
                 setNewName("");
-                setShowForm(false);
+                setShowEditForm(false);
                 editGardener(data);
             });
     }
 
-    const formDisplay = showForm
+    const formDisplay = showEditForm
         ? { padding: "10px", width: "30%", margin: "auto" }
         : { display: "none" };
 
     return (
         <div>
             <h2>{gardener.name}</h2>
+            <Button onClick={() => setShowEditForm(!showEditForm)}>
+                {showEditForm ? "Cancel Edit" : "Edit Gardener Name"}
+            </Button>
+            <Button onClick={handleDelete}>Delete Gardener</Button>
             <Form style={formDisplay} onSubmit={handleEdit}>
                 <Form.Field>
                     <label>Name: </label>
                     <input
                         placeholder="Name"
                         value={newName}
-                        onChange={handleChange}
+                        onChange={(e) => setNewName(e.target.value)}
                     />
                 </Form.Field>
                 <Button>Submit</Button>
             </Form>
-            <Button onClick={handleDisplayForm}>
-                {showForm ? "Cancel Edit" : "Edit Gardener Name"}
-            </Button>
-            <Button onClick={handleDelete}>Delete Gardener</Button>
             <Card.Group centered style={{ padding: "20px" }}>
                 <Gardens gardens={gardens} />
             </Card.Group>
+            <Button onClick={() => setShowNewForm(!showNewForm)}>
+                {showNewForm ? "Cancel New Garden" : "Start New Garden"}
+            </Button>
         </div>
     );
 }

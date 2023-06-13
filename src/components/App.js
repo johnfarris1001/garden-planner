@@ -50,7 +50,7 @@ function App() {
         <div className="App">
             <NavBar />
             <br />
-            Garden Planner
+            <h1 style={{ color: "#097969" }}>Garden Planner</h1>
             <Switch>
                 <Route exact path="/gardeners">
                     <Gardeners

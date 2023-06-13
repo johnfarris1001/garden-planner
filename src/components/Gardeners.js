@@ -62,7 +62,10 @@ function Gardeners({ gardeners, addGardener, server }) {
     return (
         <div>
             <div>
-                <Button style={{ margin: "10px" }} onClick={handleClick}>
+                <Button
+                    style={{ margin: "10px", color: "#097969" }}
+                    onClick={handleClick}
+                >
                     {buttonText}
                 </Button>
                 <Form style={display} onSubmit={handleSubmit}>
