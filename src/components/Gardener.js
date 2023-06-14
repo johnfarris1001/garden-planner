@@ -77,7 +77,14 @@ function Gardener({ server, deleteGardener, editGardener, addGarden }) {
 
     function handleNewGarden(e) {
         e.preventDefault();
-        //if (!newName) return;
+        if (
+            !newGardenFormData.name ||
+            !newGardenFormData.location ||
+            !newGardenFormData.sunlight ||
+            !newGardenFormData.rain
+        ) {
+            return;
+        }
         newGardenFormData.gardenerId = gardener.id;
         fetch(`${server}/gardens`, {
             method: "POST",
