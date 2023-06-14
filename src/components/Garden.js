@@ -13,13 +13,18 @@ function Garden({ server }) {
 
     const [showNewPlantForm, setShowNewPlantForm] = useState(false);
     const [showGardenForm, setShowGardenForm] = useState(false);
-    const [gardenForm, setGardenForm] = useState({});
     const [garden, setGarden] = useState({
         gardener: { name: "" },
         indoor_outdoor: "",
         sunlight: "",
         rain: "",
         plants: [],
+    });
+    const [gardenForm, setGardenForm] = useState({
+        name: "",
+        location: garden.indoor_outdoor,
+        sunlight: garden.sunlight,
+        rain: garden.rain,
     });
     const [newPlantInfo, setNewPlantInfo] = useState({
         name: "",
@@ -32,6 +37,13 @@ function Garden({ server }) {
             .then((r) => r.json())
             .then((data) => {
                 setGarden(data);
+                setGardenForm({
+                    ...gardenForm,
+                    name: data.name,
+                    location: capitalize(data.indoor_outdoor),
+                    sunlight: capitalize(data.sunlight),
+                    rain: capitalize(data.rain),
+                });
             });
     }, []);
 
@@ -84,8 +96,40 @@ function Garden({ server }) {
         });
     }
 
-    const display = showNewPlantForm
+    function handleUpdateGarden(e) {
+        e.preventDefault();
+        if (
+            !gardenForm.name ||
+            !gardenForm.location ||
+            !gardenForm.sunlight ||
+            !gardenForm.rain
+        ) {
+            return;
+        }
+        fetch(`${server}/gardens/${garden.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(gardenForm),
+        })
+            .then((r) => r.json())
+            .then((data) =>
+                setGarden({
+                    ...data,
+                    plants: garden.plants,
+                    gardener: { name: garden.gardener.name },
+                })
+            );
+        setShowGardenForm(false);
+    }
+
+    const newPlantDisplay = showNewPlantForm
         ? { width: "50%", margin: "auto", padding: "10px", border: "solid" }
+        : { display: "none" };
+
+    const updatePlantDisplay = showGardenForm
+        ? { width: "80%", margin: "auto", padding: "10px", border: "solid" }
         : { display: "none" };
 
     const plants = garden.plants.map((plant) => {
@@ -113,6 +157,64 @@ function Garden({ server }) {
                 </List.Item>
                 <List.Item>{"Rain: " + capitalize(garden.rain)}</List.Item>
             </List>
+            <div style={{ padding: "20px" }}>
+                <Button onClick={() => setShowGardenForm(!showGardenForm)}>
+                    {showGardenForm ? "Cancel" : "Update Garden Details"}
+                </Button>
+                <Form style={updatePlantDisplay} onSubmit={handleUpdateGarden}>
+                    <Form.Group>
+                        <Form.Field>
+                            <input
+                                placeholder="Name"
+                                value={gardenForm.name}
+                                onChange={(e) => {
+                                    setGardenForm({
+                                        ...gardenForm,
+                                        name: e.target.value,
+                                    });
+                                }}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <input
+                                placeholder="Location"
+                                value={gardenForm.location}
+                                onChange={(e) => {
+                                    setGardenForm({
+                                        ...gardenForm,
+                                        location: e.target.value,
+                                    });
+                                }}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <input
+                                placeholder="Sunglight"
+                                value={gardenForm.sunlight}
+                                onChange={(e) => {
+                                    setGardenForm({
+                                        ...gardenForm,
+                                        sunlight: e.target.value,
+                                    });
+                                }}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <input
+                                placeholder="Rain"
+                                value={gardenForm.rain}
+                                onChange={(e) => {
+                                    setGardenForm({
+                                        ...gardenForm,
+                                        rain: e.target.value,
+                                    });
+                                }}
+                            />
+                        </Form.Field>
+                        <Button>Submit</Button>
+                    </Form.Group>
+                </Form>
+            </div>
             <Table celled structured style={{ width: "80%", margin: "auto" }}>
                 <Table.Header>
                     <Table.Row>
@@ -128,10 +230,9 @@ function Garden({ server }) {
                 <Button onClick={() => setShowNewPlantForm(!showNewPlantForm)}>
                     {showNewPlantForm ? "Cancel" : "Add New Plant!"}
                 </Button>
-                <Button>Update Garden Details</Button>
                 <Button>Delete Garden</Button>
             </div>
-            <Form style={display} onSubmit={handleNewPlant}>
+            <Form style={newPlantDisplay} onSubmit={handleNewPlant}>
                 <Form.Group>
                     <Form.Field>
                         <input
