@@ -27,8 +27,25 @@ function Garden({ server }) {
             });
     }, []);
 
+    function handleRemovePlant(plant) {
+        const newPlants = garden.plants.filter((item) => {
+            return plant.id != item.id;
+        });
+        setGarden({
+            ...garden,
+            plants: newPlants,
+        });
+    }
+
     const plants = garden.plants.map((plant) => {
-        return <Plant key={plant.id} plant={plant} />;
+        return (
+            <Plant
+                key={plant.id}
+                plant={plant}
+                server={server}
+                removePlant={handleRemovePlant}
+            />
+        );
     });
 
     return (
