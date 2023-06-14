@@ -23,13 +23,12 @@ function Garden({ server }) {
         fetch(`${server}/gardens/${params.gardenId}`)
             .then((r) => r.json())
             .then((data) => {
-                console.log(data);
                 setGarden(data);
             });
     }, []);
 
     const plants = garden.plants.map((plant) => {
-        return <Plant plant={plant} />;
+        return <Plant key={plant.id} plant={plant} />;
     });
 
     return (
