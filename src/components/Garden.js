@@ -37,6 +37,20 @@ function Garden({ server }) {
         });
     }
 
+    function handleUpdatePlant(plant) {
+        const newPlants = garden.plants.map((item) => {
+            if (item.id == plant.id) {
+                return plant;
+            } else {
+                return item;
+            }
+        });
+        setGarden({
+            ...garden,
+            plants: newPlants,
+        });
+    }
+
     const plants = garden.plants.map((plant) => {
         return (
             <Plant
@@ -44,6 +58,7 @@ function Garden({ server }) {
                 plant={plant}
                 server={server}
                 removePlant={handleRemovePlant}
+                updatePlant={handleUpdatePlant}
             />
         );
     });
