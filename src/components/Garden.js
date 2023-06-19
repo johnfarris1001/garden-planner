@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Table, List, Button, Form } from "semantic-ui-react";
 
 import Plant from "./Plant";
@@ -10,7 +10,9 @@ function capitalize(s) {
 
 function Garden({ server }) {
     const params = useParams();
+    const history = useHistory();
 
+    const [confirmDelete, setConfirmDelete] = useState(false);
     const [showNewPlantForm, setShowNewPlantForm] = useState(false);
     const [showGardenForm, setShowGardenForm] = useState(false);
     const [garden, setGarden] = useState({
@@ -124,6 +126,20 @@ function Garden({ server }) {
         setShowGardenForm(false);
     }
 
+    function handleDelete() {
+        if (!confirmDelete) {
+            setConfirmDelete(true);
+            return;
+        }
+        fetch(`${server}/gardens/${garden.id}`, {
+            method: "DELETE",
+        })
+            .then((r) => r.json())
+            .then(() => {
+                history.push(`/gardeners/${garden.gardener.id}`);
+            });
+    }
+
     const newPlantDisplay = showNewPlantForm
         ? { width: "50%", margin: "auto", padding: "10px", border: "solid" }
         : { display: "none" };
@@ -230,7 +246,9 @@ function Garden({ server }) {
                 <Button onClick={() => setShowNewPlantForm(!showNewPlantForm)}>
                     {showNewPlantForm ? "Cancel" : "Add New Plant!"}
                 </Button>
-                <Button>Delete Garden</Button>
+                <Button onClick={handleDelete}>
+                    {confirmDelete ? "Are You Sure?" : "Delete Garden"}
+                </Button>
             </div>
             <Form style={newPlantDisplay} onSubmit={handleNewPlant}>
                 <Form.Group>

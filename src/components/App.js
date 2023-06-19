@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { Divider } from "semantic-ui-react";
 
 import "../App.css";
 import NavBar from "./NavBar";
@@ -52,6 +53,21 @@ function App() {
             <br />
             <h1 style={{ color: "#097969" }}>Garden Planner</h1>
             <Switch>
+                <Route exact path="/">
+                    <Divider />
+                    <h3>Gardeners</h3>
+                    <Gardeners
+                        gardeners={gardeners}
+                        addGardener={handleAddGardener}
+                        server={server}
+                    />
+                    <Divider />
+                    <h3>Gardens</h3>
+                    <Gardens gardens={gardens} />
+                    <Divider />
+                    <h3>Plants</h3>
+                    <Plants plants={plants} server={server} />
+                </Route>
                 <Route exact path="/gardeners">
                     <Gardeners
                         gardeners={gardeners}
@@ -66,7 +82,7 @@ function App() {
                     <Garden server={server} />
                 </Route>
                 <Route path="/plants">
-                    <Plants plants={plants} />
+                    <Plants plants={plants} server={server} />
                 </Route>
                 <Route path="/gardeners/:gardenerId">
                     <Gardener
