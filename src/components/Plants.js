@@ -2,8 +2,6 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Card } from "semantic-ui-react";
 
-import Plant from "./Plant";
-
 function Plants({ plants }) {
     const history = useHistory();
 

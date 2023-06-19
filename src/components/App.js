@@ -15,18 +15,25 @@ function App() {
     const [gardens, setGardens] = useState([]);
     const [plants, setPlants] = useState([]);
 
+    let newGardens = [];
+    let newPlants = [];
+
     const server = "http://localhost:9292";
 
     useEffect(() => {
         fetch(`${server}/gardeners`)
             .then((r) => r.json())
-            .then((data) => setGardeners(data));
-        fetch(`${server}/gardens`)
-            .then((r) => r.json())
-            .then((data) => setGardens(data));
-        fetch(`${server}/plants`)
-            .then((r) => r.json())
-            .then((data) => setPlants(data));
+            .then((data) => {
+                setGardeners(data);
+                data.forEach((gardener) => {
+                    newGardens = [...newGardens, ...gardener.gardens];
+                });
+                setGardens(newGardens);
+                newGardens.forEach((garden) => {
+                    newPlants = [...newPlants, ...garden.plants];
+                });
+                setPlants(newPlants);
+            });
     }, []);
 
     function handleAddGardener(gardener) {
