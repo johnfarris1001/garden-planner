@@ -94,7 +94,9 @@ function Gardener({ server, deleteGardener, editGardener, addGarden }) {
             body: JSON.stringify(newGardenFormData),
         })
             .then((r) => r.json())
-            .then((data) => addGarden(data));
+            .then((data) =>
+                addGarden({ ...data, gardener: gardener, plants: [] })
+            );
 
         setNewGardenFormData(blankFormData);
         setShowNewForm(false);

@@ -15,23 +15,22 @@ function App() {
     const [gardens, setGardens] = useState([]);
     const [plants, setPlants] = useState([]);
 
-    let newGardens = [];
-    let newPlants = [];
-
     const server = "http://localhost:9292";
 
     useEffect(() => {
         fetch(`${server}/gardeners`)
             .then((r) => r.json())
             .then((data) => {
-                setGardeners(data);
+                let newGardens = [];
+                let newPlants = [];
                 data.forEach((gardener) => {
                     newGardens = [...newGardens, ...gardener.gardens];
                 });
-                setGardens(newGardens);
                 newGardens.forEach((garden) => {
                     newPlants = [...newPlants, ...garden.plants];
                 });
+                setGardeners(data);
+                setGardens(newGardens);
                 setPlants(newPlants);
             });
     }, []);
@@ -52,6 +51,22 @@ function App() {
             return gardener.id != item.id;
         });
         setGardeners([...newGardeners, gardener]);
+    }
+
+    function handleRemoveGarden(id) {
+        const updatedGardens = gardens.filter((item) => {
+            return item.id !== id;
+        });
+        const updatedGardeners = gardeners.map((item) => {
+            if (item.gardens.filter((e) => e.id === id).length === 0) {
+                return item;
+            } else {
+                item.gardens.pop();
+                return item;
+            }
+        });
+        setGardens(updatedGardens);
+        setGardeners(updatedGardeners);
     }
 
     return (
@@ -86,7 +101,7 @@ function App() {
                     <Gardens gardens={gardens} />
                 </Route>
                 <Route path="/gardens/:gardenId">
-                    <Garden server={server} />
+                    <Garden server={server} removeGarden={handleRemoveGarden} />
                 </Route>
                 <Route path="/plants">
                     <Plants plants={plants} server={server} />

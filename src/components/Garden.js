@@ -8,7 +8,7 @@ function capitalize(s) {
     return s && s[0].toUpperCase() + s.slice(1);
 }
 
-function Garden({ server }) {
+function Garden({ server, removeGarden }) {
     const params = useParams();
     const history = useHistory();
 
@@ -136,6 +136,7 @@ function Garden({ server }) {
         })
             .then((r) => r.json())
             .then(() => {
+                removeGarden(garden.id);
                 history.push(`/gardeners/${garden.gardener.id}`);
             });
     }

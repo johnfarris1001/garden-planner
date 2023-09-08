@@ -37,6 +37,7 @@ function Gardeners({ gardeners, addGardener, server }) {
             .then((data) => addGardener(data));
 
         setNewName("");
+        setShowForm(!showForm);
     }
 
     const gardenersToDisplay = gardeners.map((gardener) => {
