@@ -69,6 +69,23 @@ function App() {
         setGardeners(updatedGardeners);
     }
 
+    function handleAddHomeGarden(garden) {
+        const updatedGardeners = gardeners.map((item) => {
+            if (item.id === garden.gardener_id) {
+                const updatedItem = {
+                    ...item,
+                    gardens: [...item.gardens, garden],
+                };
+                return updatedItem;
+            } else {
+                return item;
+            }
+        });
+        const updatedGardens = [...gardens, garden];
+        setGardeners(updatedGardeners);
+        setGardens(updatedGardens);
+    }
+
     return (
         <div className="App">
             <NavBar />
@@ -111,6 +128,7 @@ function App() {
                         server={server}
                         deleteGardener={handleDeleteGardener}
                         editGardener={handleEditGardener}
+                        addHomeGarden={handleAddHomeGarden}
                     />
                 </Route>
             </Switch>

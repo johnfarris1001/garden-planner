@@ -4,7 +4,7 @@ import { Card, Button, Form } from "semantic-ui-react";
 
 import Gardens from "./Gardens";
 
-function Gardener({ server, deleteGardener, editGardener, addGarden }) {
+function Gardener({ server, deleteGardener, editGardener, addHomeGarden }) {
     const params = useParams();
     const history = useHistory();
 
@@ -103,6 +103,7 @@ function Gardener({ server, deleteGardener, editGardener, addGarden }) {
     }
 
     function addGarden(garden) {
+        addHomeGarden(garden);
         setGardens([...gardens, garden]);
     }
 

@@ -206,7 +206,7 @@ function Garden({ server, removeGarden }) {
                         </Form.Field>
                         <Form.Field>
                             <input
-                                placeholder="Sunglight"
+                                placeholder="Sunlight"
                                 value={gardenForm.sunlight}
                                 onChange={(e) => {
                                     setGardenForm({
