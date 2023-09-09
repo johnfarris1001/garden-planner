@@ -104,8 +104,6 @@ function App() {
                     <h3>Gardens</h3>
                     <Gardens gardens={gardens} />
                     <Divider />
-                    <h3>Plants</h3>
-                    <Plants plants={plants} server={server} />
                 </Route>
                 <Route exact path="/gardeners">
                     <Gardeners
