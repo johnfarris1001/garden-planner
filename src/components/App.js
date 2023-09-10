@@ -100,10 +100,6 @@ function App() {
                         addGardener={handleAddGardener}
                         server={server}
                     />
-                    <Divider />
-                    <h3>Gardens</h3>
-                    <Gardens gardens={gardens} />
-                    <Divider />
                 </Route>
                 <Route exact path="/gardeners">
                     <Gardeners
