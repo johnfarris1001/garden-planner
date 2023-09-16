@@ -1,6 +1,6 @@
 # Garden Planner
 
-#### Keep track of the plants in your gardens
+#### Keep Track of the Plants in Your Garden(s)
 
 1. From the home page, either select your card, or create one using the "Add New Gardener" button
 2. The "Gardener" page allows you to start a new garden, edit your gardener name, or delete the gardener
