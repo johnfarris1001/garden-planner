@@ -8,4 +8,6 @@
 4. The "Garden" page allows you to update the garden details, delete the garden, and also add, delete, and edit the plants in the garden
 5. Use the Nav Bar to see all of the Gardeners, Gardens, and Plants in the application
 
+[Video Demonstration](https://youtu.be/FdcOK-SE-YY)
+
 [Garden](https://icons8.com/icon/lIRYcwvHP1GN/garden) icon by [Icons8](https://icons8.com)
