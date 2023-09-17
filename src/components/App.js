@@ -72,9 +72,13 @@ function App() {
     function handleAddHomeGarden(garden) {
         const updatedGardeners = gardeners.map((item) => {
             if (item.id === garden.gardener_id) {
+                const editedItem = {
+                    ...item,
+                    gardens: [],
+                };
                 const updatedItem = {
                     ...item,
-                    gardens: [...item.gardens, garden],
+                    gardens: [...editedItem.gardens, garden],
                 };
                 return updatedItem;
             } else {
