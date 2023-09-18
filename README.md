@@ -9,5 +9,6 @@
 5. Use the Nav Bar to see all of the Gardeners, Gardens, and Plants in the application
 
 [Video Demonstration](https://youtu.be/FdcOK-SE-YY)
+[Phase Blog Post](https://medium.com/@johnfarris217/metaprogramming-in-ruby-a-review-7469cc151fb9)
 
 [Garden](https://icons8.com/icon/lIRYcwvHP1GN/garden) icon by [Icons8](https://icons8.com)
