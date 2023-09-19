@@ -248,7 +248,7 @@ function Garden({ server, removeGarden }) {
                     {showNewPlantForm ? "Cancel" : "Add New Plant!"}
                 </Button>
                 <Button onClick={handleDelete}>
-                    {confirmDelete ? "Are You Sure?" : "Delete Garden"}
+                    {confirmDelete ? "Confirm Delete" : "Delete Garden"}
                 </Button>
             </div>
             <Form style={newPlantDisplay} onSubmit={handleNewPlant}>

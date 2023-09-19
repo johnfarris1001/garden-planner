@@ -122,7 +122,7 @@ function Gardener({ server, deleteGardener, editGardener, addHomeGarden }) {
                 {showEditForm ? "Cancel Edit" : "Edit Gardener Name"}
             </Button>
             <Button onClick={handleDelete}>
-                {confirmDelete ? "Are You Sure?" : "Delete Gardener"}
+                {confirmDelete ? "Confirm Delete" : "Delete Gardener"}
             </Button>
             <Form style={editFormDisplay} onSubmit={handleEdit}>
                 <Form.Field>

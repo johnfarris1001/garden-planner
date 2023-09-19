@@ -85,7 +85,7 @@ function Plant({ plant, server, removePlant, updatePlant }) {
                     {showUpdate ? "Submit" : "Update Plant"}
                 </Button>
                 <Button onClick={handleDelete}>
-                    {confirmDelete ? "Are You Sure?" : "Delete Plant"}
+                    {confirmDelete ? "Confirm Delete" : "Delete Plant"}
                 </Button>
             </Table.Cell>
         </Table.Row>
