@@ -77,8 +77,8 @@ function App() {
                     gardens: [],
                 };
                 const updatedItem = {
-                    ...item,
-                    gardens: [...editedItem.gardens, garden],
+                    ...editedItem,
+                    gardens: [...item.gardens, garden],
                 };
                 return updatedItem;
             } else {
